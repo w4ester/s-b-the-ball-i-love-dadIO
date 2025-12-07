@@ -1065,56 +1065,65 @@
 
           <div class="strategy-chip-row">
             <span class="strategy-chip recommended-chip">Core reset</span>
+            <span class="strategy-chip">FUDGE Method</span>
             <span class="strategy-chip">Breathing</span>
-            <span class="strategy-chip">Consistency</span>
           </div>
 
           <p class="strategy-description">
-            Decide on a quick reset you do after every challenge: a slow exhale, a small physical cue
-            (chest tap, clap, shoe fix), and a short phrase like "Next play." Dr. Jim Loehr's research shows
-            that consistent rituals help athletes trigger their Ideal Performance State (IPS) on demand.
+            Dr. Jim Loehr's research shows consistent rituals help athletes trigger their Ideal Performance State (IPS).
+            Try the <strong>FUDGE Method</strong> from Excel Sport Psychology: <strong>F</strong>udge (release frustration),
+            <strong>F</strong>ix (visualize correct play), <strong>F</strong>orget (let it go), <strong>F</strong>ocus (lock into next play).
           </p>
 
           <div class="questions-grid">
             <div class="question-block">
-              <div class="question-title">Design your reset</div>
+              <div class="question-title">Design your reset (FUDGE or custom)</div>
               <label class="question-label">
-                What are the 2–3 steps in your personal reset routine
-                (breath, physical cue, words)?
-                <textarea data-storage-key="resetRoutine-steps"
-                          data-question="What are the 2–3 steps in your personal reset routine (breath, physical cue, words)?"></textarea>
+                What's your release move? (FUDGE step 1: clap, exhale, chest tap)
+                <input type="text"
+                       data-storage-key="resetRoutine-release"
+                       data-question="What's your release move for frustration?">
               </label>
               <label class="question-label">
-                Where will you practice this routine so it feels natural on game day?
+                What's your mental fix? (Visualize the correct play)
                 <input type="text"
-                       data-storage-key="resetRoutine-practice"
-                       data-question="Where will you practice this routine so it feels natural on game day?">
+                       data-storage-key="resetRoutine-fix"
+                       data-question="How will you mentally visualize the correct play?">
+              </label>
+              <label class="question-label">
+                What's your forget cue? (Word, gesture, or breath to let go)
+                <input type="text"
+                       data-storage-key="resetRoutine-forget"
+                       data-question="What cue helps you forget and move on?">
               </label>
             </div>
 
             <div class="question-block">
-              <div class="question-title">Use it on your challenge</div>
+              <div class="question-title">Mindfulness breathing option</div>
               <label class="question-label">
-                After a
-                <span class="dynamic-label" data-dynamic="mistakeLabel"></span>
-                as a
-                <span class="dynamic-label" data-dynamic="positionLabel"></span>,
-                what will remind you to trigger your reset?
-                <input type="text"
-                       data-storage-key="resetRoutine-reminder"
-                       data-question="After your chosen challenge in your position, what will remind you to trigger your reset?">
+                Try box breathing: Inhale 4 sec → Hold 4 sec → Exhale 4 sec → Hold 4 sec.
+                Will you use breath control in your reset?
+                <select data-storage-key="resetRoutine-breathing" data-question="Will you use breath control in your reset?">
+                  <option value="">Select...</option>
+                  <option value="box">Box breathing (4-4-4-4)</option>
+                  <option value="exhale">Long exhale only</option>
+                  <option value="quick">Quick deep breath</option>
+                  <option value="none">No breathing focus</option>
+                </select>
               </label>
               <label class="question-label">
-                How many seconds will you allow yourself to reset before locking back in?
-                <input type="number" min="1" max="10" step="1"
-                       data-storage-key="resetRoutine-seconds"
-                       data-question="How many seconds will you allow yourself to reset before locking back in?">
+                Your focus phrase for the next play:
+                <input type="text"
+                       data-storage-key="resetRoutine-focus"
+                       data-question="What focus phrase will you use for the next play?"
+                       placeholder="e.g., 'Next play' or 'Lock in'">
               </label>
             </div>
           </div>
 
           <p class="strategy-footer-note">
-            The goal isn't zero emotion — it's a fast bounce‑back.
+            <strong>Research stat:</strong> 77% of athletes experience "choking" moments — your reset routine is what separates you.
+            <span style="opacity:0.7">(2024 Meta-Study, Int. Review of Sport Psychology)</span>
           </p>
         </div>
       </article>
@@ -1214,6 +1223,14 @@
             talking on defense, boxing out, and playing with great energy. When the box score
             isn't going your way, double down on the hustle plays.
           </p>
+
+          <div class="research-tip">
+            <strong>4C Mental Toughness Model</strong> (Dr. Paul McCarthy):<br>
+            <strong>Commitment</strong> – Set goals and stay locked in<br>
+            <strong>Challenge</strong> – See setbacks as opportunities to grow<br>
+            <strong>Control</strong> – Focus only on what you can influence<br>
+            <strong>Confidence</strong> – Trust your preparation and ability
+          </div>
 
           <div class="questions-grid">
             <div class="question-block">
@@ -1350,6 +1367,12 @@
             you keep shooting or making the right reads.
           </p>
 
+          <div class="research-tip">
+            <strong>You're not alone:</strong> A 2024 meta-study found that 77% of athletes
+            report experiencing "choking" at some point. It's a normal part of competition —
+            what matters is how you respond. Having a pre-set rule keeps you aggressive.
+          </div>
+
           <div class="questions-grid">
             <div class="question-block">
               <div class="question-title">Set your rule</div>
@@ -1418,6 +1441,12 @@
             Do the opposite on purpose: communicate on defense, give a quick high‑five, or say
             "My bad, I got you next." Staying connected keeps you out of your own head.
           </p>
+
+          <div class="research-tip">
+            <strong>Research insight:</strong> Studies show winning teams communicate 2× more
+            than losing teams during games. Verbal and non-verbal cues (high-fives, eye contact)
+            build trust and momentum — especially after setbacks.
+          </div>
 
           <div class="questions-grid">
             <div class="question-block">
@@ -1551,6 +1580,12 @@
             shows that a longer, steadier gaze improves performance under pressure. One clear visual or
             physical target leaves less room in your head for negativity.
           </p>
+
+          <div class="research-tip">
+            <strong>Preshot routine example:</strong> WNBA MVP Elena Delle Donne uses a consistent
+            free throw routine — 3 dribbles, deep breath, focus on the front of the rim.
+            Build your own 3-step routine: (1) physical cue, (2) breath, (3) visual target.
+          </div>
 
           <div class="questions-grid">
             <div class="question-block">
