@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Basketball Mental Game Planner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    :root {
+      --bg: #020617;
+      --bg-soft: #0b1220;
+      --bg-card: #f9fafb;
+      --bg-card-alt: #eef2ff;
+      --accent: #6366f1;
+      --accent-soft: rgba(99, 102, 241, 0.1);
+      --accent-strong: #4f46e5;
+      --accent-muted: #a5b4fc;
+      --border: #e5e7eb;
+      --text: #020617;
+      --text-soft: #4b5563;
+      --text-softer: #6b7280;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.18);
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --transition-fast: 0.18s ease-out;
+      --transition-med: 0.25s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, #0f172a 0, transparent 50%),
+        radial-gradient(circle at bottom right, #111827 0, transparent 55%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page-shell {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 1.5rem clamp(1rem, 3vw, 2rem) 3rem;
+    }
+
+    header.page-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      color: #f9fafb;
+      margin-bottom: 1.25rem;
+    }
+
+    .page-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      width: fit-content;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #e5e7eb;
+    }
+
+    .page-eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.18);
+    }
+
+    .page-title {
+      font-size: clamp(1.8rem, 3.2vw, 2.2rem);
+      letter-spacing: -0.04em;
+      font-weight: 700;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.4rem;
+    }
+
+    .page-title span.accent {
+      color: var(--accent-muted);
+      font-weight: 500;
+      font-size: 0.9em;
+    }
+
+    .page-subtitle {
+      font-size: 0.95rem;
+      color: #cbd5f5;
+      max-width: 38rem;
+    }
+
+    /* Controls */
+
+    .controls-card {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      margin-bottom: 1.5rem;
+      border-radius: var(--radius-lg);
+      padding: 1.1rem 1rem;
+      backdrop-filter: blur(14px);
+      background:
+        linear-gradient(to bottom right, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.9));
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      box-shadow: 0 22px 60px rgba(15, 23, 42, 0.55);
+      color: #e5e7eb;
+    }
+
+    .controls-main-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.9rem;
+      align-items: flex-end;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .field-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #cbd5f5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+    }
+
+    .field-label span.muted {
+      text-transform: none;
+      letter-spacing: normal;
+      font-size: 0.7rem;
+      color: #94a3b8;
+    }
+
+    select,
+    input[type="number"],
+    input[type="text"],
+    textarea {
+      width: 100%;
+      font-family: inherit;
+      font-size: 0.9rem;
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      padding: 0.45rem 0.65rem;
+      background: rgba(15, 23, 42, 0.75);
+      color: #e5e7eb;
+      outline: none;
+      transition: border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background-color var(--transition-fast),
+        transform var(--transition-fast);
+    }
+
+    select:focus,
+    input:focus,
+    textarea:focus {
+      border-color: var(--accent-muted);
+      box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.4);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    select {
+      appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, #cbd5f5 50%),
+        linear-gradient(135deg, #cbd5f5 50%, transparent 50%);
+      background-position:
+        calc(100% - 14px) calc(1rem - 2px),
+        calc(100% - 9px) calc(1rem - 2px);
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
+      padding-right: 1.75rem;
+      cursor: pointer;
+    }
+
+    .controls-buttons-row {
+      margin-top: 0.9rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: #9ca3af;
+    }
+
+    .controls-buttons-left,
+    .controls-buttons-right {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .pill-badge {
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(156, 163, 175, 0.5);
+      background: rgba(15, 23, 42, 0.8);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .button {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      padding: 0.35rem 0.75rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      background: rgba(15, 23, 42, 0.7);
+      color: #e5e7eb;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      cursor: pointer;
+      transition: background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .button span.icon {
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+
+    .button-primary {
+      border-color: var(--accent);
+      background: linear-gradient(to right, var(--accent), #3b82f6);
+      color: #f9fafb;
+      box-shadow: 0 14px 30px rgba(37, 99, 235, 0.45);
+    }
+
+    .button:hover {
+      transform: translateY(-0.5px);
+      background: rgba(15, 23, 42, 0.95);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.7);
+    }
+
+    .button-primary:hover {
+      background: linear-gradient(to right, var(--accent-strong), #2563eb);
+      box-shadow: 0 18px 40px rgba(37, 99, 235, 0.6);
+    }
+
+    .button:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    /* Summary */
+
+    .summary-card {
+      border-radius: var(--radius-lg);
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      padding: 0.9rem 1rem 1rem;
+      margin-bottom: 1.4rem;
+      color: #e5e7eb;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.55);
+    }
+
+    .summary-header-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .summary-title {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #c7d2fe;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .summary-title-pill {
+      padding: 0.13rem 0.45rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(129, 140, 248, 0.7);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+    }
+
+    .summary-line {
+      font-size: 0.92rem;
+      color: #e5e7eb;
+      margin-bottom: 0.35rem;
+    }
+
+    .summary-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 0.7rem;
+      font-size: 0.78rem;
+      color: #cbd5f5;
+      margin-bottom: 0.35rem;
+    }
+
+    .summary-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .summary-meta .bullet {
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: #818cf8;
+    }
+
+    .summary-bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0.2rem 0 0;
+      font-size: 0.82rem;
+      color: #e5e7eb;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.2rem 0.8rem;
+    }
+
+    .summary-bullets li {
+      position: relative;
+      padding-left: 0.85rem;
+    }
+
+    .summary-bullets li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.52rem;
+      width: 7px;
+      height: 2px;
+      border-radius: 999px;
+      background: #60a5fa;
+    }
+
+    /* Strategy nav */
+
+    .strategy-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .strategy-nav-item {
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      padding: 0.3rem 0.65rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      background: #f9fafb;
+      color: #111827;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+      box-shadow: 0 4px 10px rgba(148, 163, 184, 0.25);
+    }
+
+    .strategy-nav-item span.index {
+      font-size: 0.75rem;
+      padding: 0.05rem 0.35rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.06);
+      color: #4b5563;
+    }
+
+    .strategy-nav-item:hover {
+      transform: translateY(-1px);
+      background: #eff6ff;
+      border-color: #c7d2fe;
+      box-shadow: 0 8px 16px rgba(129, 140, 248, 0.3);
+    }
+
+    .strategy-nav-item.active {
+      background: #1d4ed8;
+      border-color: #1d4ed8;
+      color: #eff6ff;
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.45);
+    }
+
+    .strategy-nav-item.active span.index {
+      background: rgba(15, 23, 42, 0.25);
+      color: #e5e7eb;
+    }
+
+    .strategy-nav-item.recommended {
+      border-color: #818cf8;
+      background: #eef2ff;
+      color: #111827;
+    }
+
+    .strategy-nav-item.recommended.active {
+      background: #4f46e5;
+      border-color: #4f46e5;
+      color: #f9fafb;
+    }
+
+    /* Strategy cards */
+
+    .strategies-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .strategy-card {
+      border-radius: var(--radius-lg);
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      padding: 0.95rem 1rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      box-shadow: 0 10px 26px rgba(148, 163, 184, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .strategy-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at top left, rgba(129, 140, 248, 0.18), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(96, 165, 250, 0.12), transparent 55%);
+      opacity: 0;
+      transition: opacity var(--transition-med);
+      z-index: 0;
+    }
+
+    .strategy-card.recommended::before {
+      opacity: 1;
+    }
+
+    .strategy-card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .strategy-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.8rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .strategy-title {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .strategy-index-pill {
+      font-size: 0.78rem;
+      padding: 0.05rem 0.4rem;
+      border-radius: 999px;
+      background: #e5e7eb;
+      color: #4b5563;
+    }
+
+    .strategy-tagline {
+      font-size: 0.78rem;
+      color: #6b7280;
+    }
+
+    .strategy-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .strategy-chip {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 0.16rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    .strategy-chip.recommended-chip {
+      border-color: #4f46e5;
+      background: #e0e7ff;
+      color: #312e81;
+    }
+
+    .strategy-description {
+      font-size: 0.86rem;
+      color: #4b5563;
+      margin-bottom: 0.35rem;
+    }
+
+    .questions-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+      gap: 0.7rem;
+    }
+
+    .question-block {
+      background: #f3f4f6;
+      border-radius: var(--radius-md);
+      border: 1px solid #e5e7eb;
+      padding: 0.55rem 0.65rem 0.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      font-size: 0.82rem;
+    }
+
+    .question-title {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #6b7280;
+    }
+
+    .question-label {
+      font-size: 0.82rem;
+      color: #374151;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 3.4rem;
+      max-height: 10rem;
+      background: #ffffff;
+      color: #111827;
+      border-color: #d1d5db;
+    }
+
+    textarea:focus {
+      background: #ffffff;
+      border-color: #60a5fa;
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      background: #ffffff;
+      color: #111827;
+      border-color: #d1d5db;
+      font-size: 0.86rem;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      margin: 0;
+    }
+
+    .dynamic-label {
+      font-weight: 600;
+      color: #1d4ed8;
+    }
+
+    .strategy-footer-note {
+      margin-top: 0.3rem;
+      font-size: 0.78rem;
+      color: #6b7280;
+    }
+
+    /* Floating back to top */
+
+    .back-to-top {
+      position: fixed;
+      right: 1.25rem;
+      bottom: 1.25rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: rgba(15, 23, 42, 0.95);
+      color: #e5e7eb;
+      font-size: 0.8rem;
+      padding: 0.35rem 0.65rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      cursor: pointer;
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.85);
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      transition: opacity var(--transition-med), transform var(--transition-med);
+      z-index: 25;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    /* Responsive */
+
+    @media (max-width: 880px) {
+      .controls-main-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .controls-main-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .controls-card {
+        padding: 0.9rem 0.85rem 1rem;
+      }
+
+      .summary-card {
+        padding: 0.8rem 0.8rem 0.9rem;
+      }
+
+      .strategy-card {
+        padding: 0.8rem 0.8rem 0.9rem;
+      }
+
+      .questions-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .page-shell {
+        padding-inline: 0.9rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-shell" id="top">
+    <header class="page-header">
+      <div class="page-eyebrow">
+        <span class="page-eyebrow-dot"></span>
+        <span>Basketball mental reset tool</span>
+      </div>
+      <h1 class="page-title">
+        Next-play mindset planner
+        <span class="accent">for every position &amp; mistake</span>
+      </h1>
+      <p class="page-subtitle">
+        Pick your position and the mistake that bothers you most. Use the questions to build your own
+        reset routine, next-play self-talk, and confidence plan for game nights.
+      </p>
+    </header>
+
+    <!-- Controls / selectors -->
+    <section class="controls-card" aria-label="Choose position and mistake">
+      <div class="controls-main-row">
+        <div class="field-group">
+          <label class="field-label" for="positionSelect">
+            Position
+            <span class="muted">Guards, wings, bigs &amp; hybrids</span>
+          </label>
+          <select id="positionSelect">
+            <option value="guard">Guard / Point guard</option>
+            <option value="wing">Wing / 2–3</option>
+            <option value="big">Big / 4–5</option>
+            <option value="allrounder">All-rounder / Positionless</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="mistakeSelect">
+            Mistake that tilts you
+            <span class="muted">Pick the one that gets in your head</span>
+          </label>
+          <select id="mistakeSelect">
+            <option value="missedShot">Missed shot / layup</option>
+            <option value="turnover">Turnover / bad pass</option>
+            <option value="foulTrouble">Foul trouble</option>
+            <option value="defense">Blown coverage / scored on</option>
+            <option value="energy">Low energy / bad body language</option>
+            <option value="rebound">Missed box out / rebound</option>
+            <option value="freeThrow">Missed free throw</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <span class="field-label">
+            Quick actions
+            <span class="muted">Make this page your pre‑game ritual</span>
+          </span>
+          <div style="display:flex; flex-wrap:wrap; gap:0.45rem;">
+            <button type="button" class="button" id="randomComboBtn">
+              <span class="icon">🎲</span>
+              Random combo
+            </button>
+            <button type="button" class="button button-primary" id="downloadPlanBtn">
+              <span class="icon">⬇️</span>
+              Save my plan
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls-buttons-row">
+        <div class="controls-buttons-left">
+          <span class="pill-badge">
+            <span class="pill-dot"></span>
+            <span>Answers auto‑save on this device</span>
+          </span>
+        </div>
+        <div class="controls-buttons-right">
+          <span>Tip: Fill this in during practice or on the bus to games.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Summary -->
+    <section class="summary-card" id="summaryPanel" aria-live="polite">
+      <div class="summary-header-row">
+        <div class="summary-title">
+          Game mindset snapshot
+          <span class="summary-title-pill">Live</span>
+        </div>
+      </div>
+      <p class="summary-line" id="summaryLine">
+        <!-- Filled by JS -->
+      </p>
+      <div class="summary-meta">
+        <span><span class="bullet"></span> Position: <span id="summaryPosition"></span></span>
+        <span><span class="bullet"></span> Main mistake: <span id="summaryMistake"></span></span>
+      </div>
+      <ul class="summary-bullets" id="summaryBullets"></ul>
+    </section>
+
+    <!-- Strategy navigation -->
+    <nav class="strategy-nav" aria-label="Strategy index">
+      <button type="button" class="strategy-nav-item" data-target="strategy-resetRoutine" data-strategy-id="resetRoutine">
+        <span class="index">1</span>
+        Reset routine
+      </button>
+      <button type="button" class="strategy-nav-item" data-target="strategy-nextPlay" data-strategy-id="nextPlay">
+        <span class="index">2</span>
+        Next-play talk
+      </button>
+      <button type="button" class="strategy-nav-item" data-target="strategy-controllables" data-strategy-id="controllables">
+        <span class="index">3</span>
+        Controllables
+      </button>
+      <button type="button" class="strategy-nav-item" data-target="strategy-reframe" data-strategy-id="reframe">
+        <span class="index">4</span>
+        Reframe mistakes
+      </button>
+      <button type="button" class="strategy-nav-item" data-target="strategy-missRule" data-strategy-id="missRule">
+        <span class="index">5</span>
+        Misses rule
+      </button>
+      <button type="button" class="strategy-nav-item" data-target="strategy-teamConnect" data-strategy-id="teamConnect">
+        <span class="index">6</span>
+        Team connection
+      </button>
+      <button type="button" class="strategy-nav-item" data-target="strategy-bodyLanguage" data-strategy-id="bodyLanguage">
+        <span class="index">7</span>
+        Body language
+      </button>
+      <button type="button" class="strategy-nav-item" data-target="strategy-focusTarget" data-strategy-id="focusTarget">
+        <span class="index">8</span>
+        Focus target
+      </button>
+      <button type="button" class="strategy-nav-item" data-target="strategy-review" data-strategy-id="review">
+        <span class="index">9</span>
+        Post-game review
+      </button>
+    </nav>
+
+    <!-- Strategies -->
+    <section class="strategies-grid" id="strategies">
+
+      <!-- 1. Reset routine -->
+      <article class="strategy-card" id="strategy-resetRoutine" data-strategy-id="resetRoutine">
+        <div class="strategy-card-inner">
+          <header class="strategy-header">
+            <div>
+              <div class="strategy-title">
+                <span class="strategy-index-pill">1</span>
+                Reset routine (3–5 seconds)
+              </div>
+              <div class="strategy-tagline">
+                A tiny routine you use every single time you mess up.
+              </div>
+            </div>
+          </header>
+
+          <div class="strategy-chip-row">
+            <span class="strategy-chip recommended-chip">Core reset</span>
+            <span class="strategy-chip">Breathing</span>
+            <span class="strategy-chip">Consistency</span>
+          </div>
+
+          <p class="strategy-description">
+            Decide on a quick reset you do after every mistake: a slow exhale, a small physical cue
+            (chest tap, clap, shoe fix), and a short phrase like "Next play." Practice it in scrimmage
+            so your brain links mistakes with calming down instead of panicking.
+          </p>
+
+          <div class="questions-grid">
+            <div class="question-block">
+              <div class="question-title">Design your reset</div>
+              <label class="question-label">
+                What are the 2–3 steps in your personal reset routine
+                (breath, physical cue, words)?
+                <textarea data-storage-key="resetRoutine-steps"
+                          data-question="What are the 2–3 steps in your personal reset routine (breath, physical cue, words)?"></textarea>
+              </label>
+              <label class="question-label">
+                Where will you practice this routine so it feels natural on game day?
+                <input type="text"
+                       data-storage-key="resetRoutine-practice"
+                       data-question="Where will you practice this routine so it feels natural on game day?">
+              </label>
+            </div>
+
+            <div class="question-block">
+              <div class="question-title">Use it on your mistake</div>
+              <label class="question-label">
+                After a
+                <span class="dynamic-label" data-dynamic="mistakeLabel"></span>
+                as a
+                <span class="dynamic-label" data-dynamic="positionLabel"></span>,
+                what will remind you to trigger your reset?
+                <input type="text"
+                       data-storage-key="resetRoutine-reminder"
+                       data-question="After your chosen mistake in your position, what will remind you to trigger your reset?">
+              </label>
+              <label class="question-label">
+                How many seconds will you allow yourself to reset before locking back in?
+                <input type="number" min="1" max="10" step="1"
+                       data-storage-key="resetRoutine-seconds"
+                       data-question="How many seconds will you allow yourself to reset before locking back in?">
+              </label>
+            </div>
+          </div>
+
+          <p class="strategy-footer-note">
+            The goal isn't zero emotion — it's a fast bounce‑back.
+          </p>
+        </div>
+      </article>
+
+      <!-- 2. Next-play self-talk -->
+      <article class="strategy-card" id="strategy-nextPlay" data-strategy-id="nextPlay">
+        <div class="strategy-card-inner">
+          <header class="strategy-header">
+            <div>
+              <div class="strategy-title">
+                <span class="strategy-index-pill">2</span>
+                Next-play self-talk
+              </div>
+              <div class="strategy-tagline">
+                Short phrases that tell your brain what to do now, not what went wrong.
+              </div>
+            </div>
+          </header>
+
+          <div class="strategy-chip-row">
+            <span class="strategy-chip recommended-chip">Next play</span>
+            <span class="strategy-chip">Confidence</span>
+            <span class="strategy-chip">Focus</span>
+          </div>
+
+          <p class="strategy-description">
+            When you mess up, your brain wants to yell "I suck" or "Coach is mad." Replace that with
+            short, specific commands like "Sprint back," "Two hands on the ball," or "Feet set, follow
+            through." Your words should coach you on the next action, not punish you for the last one.
+          </p>
+
+          <div class="questions-grid">
+            <div class="question-block">
+              <div class="question-title">Your go-to phrases</div>
+              <label class="question-label">
+                Write 2–3 short, positive "next play" phrases you like (for any mistake).
+                <textarea data-storage-key="nextPlay-phrases"
+                          data-question="Write 2–3 short, positive next-play phrases you like (for any mistake)."></textarea>
+              </label>
+              <label class="question-label">
+                Which phrase will you use most often when you're tired or frustrated?
+                <input type="text"
+                       data-storage-key="nextPlay-mainPhrase"
+                       data-question="Which phrase will you use most often when you're tired or frustrated?">
+              </label>
+            </div>
+
+            <div class="question-block">
+              <div class="question-title">Match it to your role</div>
+              <label class="question-label">
+                After a
+                <span class="dynamic-label" data-dynamic="mistakeLabel"></span>
+                as a
+                <span class="dynamic-label" data-dynamic="positionLabel"></span>,
+                what exact phrase will you say to yourself?
+                <input type="text"
+                       data-storage-key="nextPlay-specificPhrase"
+                       data-question="After your chosen mistake in your position, what exact phrase will you say to yourself?">
+              </label>
+              <label class="question-label">
+                Finish this sentence: "My self-talk will <strong>always</strong> tell me to…"
+                <textarea data-storage-key="nextPlay-always"
+                          data-question="Finish this sentence: My self-talk will always tell me to…"></textarea>
+              </label>
+            </div>
+          </div>
+
+          <p class="strategy-footer-note">
+            Rule: your self-talk must include a clear verb about what you'll do next.
+          </p>
+        </div>
+      </article>
+
+      <!-- 3. Focus on controllables -->
+      <article class="strategy-card" id="strategy-controllables" data-strategy-id="controllables">
+        <div class="strategy-card-inner">
+          <header class="strategy-header">
+            <div>
+              <div class="strategy-title">
+                <span class="strategy-index-pill">3</span>
+                Play the controllables
+              </div>
+              <div class="strategy-tagline">
+                Effort, energy, and communication never have shooting slumps.
+              </div>
+            </div>
+          </header>
+
+          <div class="strategy-chip-row">
+            <span class="strategy-chip recommended-chip">Effort</span>
+            <span class="strategy-chip">Defense</span>
+            <span class="strategy-chip">Hustle</span>
+          </div>
+
+          <p class="strategy-description">
+            You can't control if every shot drops, but you can always control sprinting back,
+            talking on defense, boxing out, and playing with great energy. When the box score
+            isn't going your way, double down on the hustle plays.
+          </p>
+
+          <div class="questions-grid">
+            <div class="question-block">
+              <div class="question-title">Your controllable list</div>
+              <label class="question-label">
+                List 3–5 controllable things you can always bring, no matter how you're shooting.
+                <textarea data-storage-key="controllables-list"
+                          data-question="List 3–5 controllable things you can always bring, no matter how you're shooting."></textarea>
+              </label>
+              <label class="question-label">
+                Which of those will be your <strong>non‑negotiable</strong> in every game?
+                <input type="text"
+                       data-storage-key="controllables-nonnegotiable"
+                       data-question="Which controllable will be your non-negotiable in every game?">
+              </label>
+            </div>
+
+            <div class="question-block">
+              <div class="question-title">Tie it to your role</div>
+              <label class="question-label">
+                As a
+                <span class="dynamic-label" data-dynamic="positionLabel"></span>,
+                what's one hustle job you can dominate even after a
+                <span class="dynamic-label" data-dynamic="mistakeLabel"></span>?
+                <textarea data-storage-key="controllables-roleHustle"
+                          data-question="In your position, what is one hustle job you can dominate even after your chosen mistake?"></textarea>
+              </label>
+              <label class="question-label">
+                How will you remind yourself to lean into effort when your stats aren't good?
+                <input type="text"
+                       data-storage-key="controllables-reminder"
+                       data-question="How will you remind yourself to lean into effort when your stats aren't good?">
+              </label>
+            </div>
+          </div>
+
+          <p class="strategy-footer-note">
+            New rule: if your shot goes down, your energy stays high. If your shot is off,
+            your energy goes even higher.
+          </p>
+        </div>
+      </article>
+
+      <!-- 4. Reframe mistakes as information -->
+      <article class="strategy-card" id="strategy-reframe" data-strategy-id="reframe">
+        <div class="strategy-card-inner">
+          <header class="strategy-header">
+            <div>
+              <div class="strategy-title">
+                <span class="strategy-index-pill">4</span>
+                Reframe mistakes as information
+              </div>
+              <div class="strategy-tagline">
+                Instead of "I'm bad," ask "What can I adjust on the next rep?"
+              </div>
+            </div>
+          </header>
+
+          <div class="strategy-chip-row">
+            <span class="strategy-chip recommended-chip">Growth</span>
+            <span class="strategy-chip">Film mindset</span>
+            <span class="strategy-chip">Calm</span>
+          </div>
+
+          <p class="strategy-description">
+            When you mess up, zoom out like you're watching film: what exactly happened? Were you
+            off‑balance, rushed, at a bad angle, or late on a rotation? One small adjustment turns a
+            painful moment into a useful rep.
+          </p>
+
+          <div class="questions-grid">
+            <div class="question-block">
+              <div class="question-title">Describe the play</div>
+              <label class="question-label">
+                Think of a recent
+                <span class="dynamic-label" data-dynamic="mistakeLabel"></span>.
+                Describe what happened like a coach would on film.
+                <textarea data-storage-key="reframe-description"
+                          data-question="Describe a recent version of your chosen mistake like a coach would on film."></textarea>
+              </label>
+              <label class="question-label">
+                What were 1–2 main causes (timing, balance, decision, communication, etc.)?
+                <textarea data-storage-key="reframe-causes"
+                          data-question="What were 1–2 main causes of that mistake?"></textarea>
+              </label>
+            </div>
+
+            <div class="question-block">
+              <div class="question-title">Set your adjustment</div>
+              <label class="question-label">
+                What is one simple adjustment you'll try next time in this situation?
+                <textarea data-storage-key="reframe-adjustment"
+                          data-question="What is one simple adjustment you'll try next time in this situation?"></textarea>
+              </label>
+              <label class="question-label">
+                Write the sentence you'll use in games:
+                "That play showed me I need to…"
+                <textarea data-storage-key="reframe-sentence"
+                          data-question="Finish the sentence: That play showed me I need to…"></textarea>
+              </label>
+            </div>
+          </div>
+
+          <p class="strategy-footer-note">
+            You're not a bad player — you're just collecting data for the next rep.
+          </p>
+        </div>
+      </article>
+
+      <!-- 5. Misses-are-okay rule -->
+      <article class="strategy-card" id="strategy-missRule" data-strategy-id="missRule">
+        <div class="strategy-card-inner">
+          <header class="strategy-header">
+            <div>
+              <div class="strategy-title">
+                <span class="strategy-index-pill">5</span>
+                Misses are okay rule
+              </div>
+              <div class="strategy-tagline">
+                Give yourself permission to stay aggressive after "X" mistakes.
+              </div>
+            </div>
+          </header>
+
+          <div class="strategy-chip-row">
+            <span class="strategy-chip recommended-chip">Confidence</span>
+            <span class="strategy-chip">Aggression</span>
+            <span class="strategy-chip">Shooter's mindset</span>
+          </div>
+
+          <p class="strategy-description">
+            Before games, decide how many misses or mistakes you're allowed before you'd even think
+            about changing anything. This keeps you from shutting down after one bad play and helps
+            you keep shooting or making the right reads.
+          </p>
+
+          <div class="questions-grid">
+            <div class="question-block">
+              <div class="question-title">Set your rule</div>
+              <label class="question-label">
+                How many
+                <span class="dynamic-label" data-dynamic="mistakeLabel"></span>s
+                in a row are you allowed before you change <strong>nothing</strong>
+                and stay aggressive?
+                <input type="number" min="1" max="10" step="1"
+                       data-storage-key="missRule-count"
+                       data-question="How many of your chosen mistakes in a row are you allowed before you change nothing and stay aggressive?">
+              </label>
+              <label class="question-label">
+                Finish this: "Even if I make <em>X</em> mistakes, I will still…"
+                <textarea data-storage-key="missRule-evenIf"
+                          data-question="Finish this: Even if I make X mistakes, I will still…"></textarea>
+              </label>
+            </div>
+
+            <div class="question-block">
+              <div class="question-title">Connect it to your shot</div>
+              <label class="question-label">
+                When will you <strong>stop</strong> shooting or attacking? (Be specific.)
+                <textarea data-storage-key="missRule-stop"
+                          data-question="When will you stop shooting or attacking? Be specific."></textarea>
+              </label>
+              <label class="question-label">
+                What will you tell yourself after each miss to remember your rule?
+                <input type="text"
+                       data-storage-key="missRule-reminder"
+                       data-question="What will you tell yourself after each miss to remember your rule?">
+              </label>
+            </div>
+          </div>
+
+          <p class="strategy-footer-note">
+            You don't earn the "green light" by never missing. You earn it by taking the right
+            shots and staying locked in on the rest of the game.
+          </p>
+        </div>
+      </article>
+
+      <!-- 6. Stay connected to teammates -->
+      <article class="strategy-card" id="strategy-teamConnect" data-strategy-id="teamConnect">
+        <div class="strategy-card-inner">
+          <header class="strategy-header">
+            <div>
+              <div class="strategy-title">
+                <span class="strategy-index-pill">6</span>
+                Stay connected to teammates
+              </div>
+              <div class="strategy-tagline">
+                Don't go quiet after a mistake — talk more, high‑five more.
+              </div>
+            </div>
+          </header>
+
+          <div class="strategy-chip-row">
+            <span class="strategy-chip recommended-chip">Leadership</span>
+            <span class="strategy-chip">Energy</span>
+            <span class="strategy-chip">Communication</span>
+          </div>
+
+          <p class="strategy-description">
+            After you mess up, it's normal to look down, avoid eye contact, and stop talking.
+            Do the opposite on purpose: communicate on defense, give a quick high‑five, or say
+            "My bad, I got you next." Staying connected keeps you out of your own head.
+          </p>
+
+          <div class="questions-grid">
+            <div class="question-block">
+              <div class="question-title">Your go-to phrases</div>
+              <label class="question-label">
+                What will you say to a teammate right after <strong>you</strong> mess up?
+                <textarea data-storage-key="teamConnect-myBad"
+                          data-question="What will you say to a teammate right after you mess up?"></textarea>
+              </label>
+              <label class="question-label">
+                List 2 ways you can encourage teammates even if your own game is rough.
+                <textarea data-storage-key="teamConnect-encourage"
+                          data-question="List 2 ways you can encourage teammates even if your own game is rough."></textarea>
+              </label>
+            </div>
+
+            <div class="question-block">
+              <div class="question-title">Anchor it to your mistake</div>
+              <label class="question-label">
+                After a
+                <span class="dynamic-label" data-dynamic="mistakeLabel"></span>,
+                what is one specific communication you'll give on the <strong>next</strong> play?
+                <input type="text"
+                       data-storage-key="teamConnect-nextTalk"
+                       data-question="After your chosen mistake, what is one specific communication you'll give on the next play?">
+              </label>
+              <label class="question-label">
+                Who on your team needs the most positive energy from you during games?
+                <input type="text"
+                       data-storage-key="teamConnect-who"
+                       data-question="Who on your team needs the most positive energy from you during games?">
+              </label>
+            </div>
+          </div>
+
+          <p class="strategy-footer-note">
+            Being a great teammate is 100% controllable, even on your worst shooting nights.
+          </p>
+        </div>
+      </article>
+
+      <!-- 7. Body language -->
+      <article class="strategy-card" id="strategy-bodyLanguage" data-strategy-id="bodyLanguage">
+        <div class="strategy-card-inner">
+          <header class="strategy-header">
+            <div>
+              <div class="strategy-title">
+                <span class="strategy-index-pill">7</span>
+                Body language as a superpower
+              </div>
+              <div class="strategy-tagline">
+                Look confident first — your feelings will often follow your posture.
+              </div>
+            </div>
+          </header>
+
+          <div class="strategy-chip-row">
+            <span class="strategy-chip recommended-chip">Presence</span>
+            <span class="strategy-chip">Composure</span>
+            <span class="strategy-chip">Coachability</span>
+          </div>
+
+          <p class="strategy-description">
+            Your body language affects your mindset, teammates, and coaches. Chin up, shoulders back,
+            hands ready, and quick sprints send a simple message: "I'm still locked in," even after
+            a bad play.
+          </p>
+
+          <div class="questions-grid">
+            <div class="question-block">
+              <div class="question-title">Define your look</div>
+              <label class="question-label">
+                Describe what "strong body language" looks like for you on the court.
+                <textarea data-storage-key="bodyLanguage-define"
+                          data-question="Describe what strong body language looks like for you on the court."></textarea>
+              </label>
+              <label class="question-label">
+                What negative habit do you want to remove (slumped shoulders, eye‑rolls, staring at coach, etc.)?
+                <input type="text"
+                       data-storage-key="bodyLanguage-remove"
+                       data-question="What negative body language habit do you want to remove?">
+              </label>
+            </div>
+
+            <div class="question-block">
+              <div class="question-title">Tie it to your mistake</div>
+              <label class="question-label">
+                After a
+                <span class="dynamic-label" data-dynamic="mistakeLabel"></span>,
+                what 1–2 physical cues will you hit (e.g., chin up + sprint back)?
+                <textarea data-storage-key="bodyLanguage-cues"
+                          data-question="After your chosen mistake, what 1–2 physical cues will you hit?"></textarea>
+              </label>
+              <label class="question-label">
+                If someone filmed only your body language, what would you want them to say about you?
+                <textarea data-storage-key="bodyLanguage-film"
+                          data-question="If someone filmed only your body language, what would you want them to say about you?"></textarea>
+              </label>
+            </div>
+          </div>
+
+          <p class="strategy-footer-note">
+            Sometimes the fastest way to change your mind is to change your posture and speed.
+          </p>
+        </div>
+      </article>
+
+      <!-- 8. One-play focus target -->
+      <article class="strategy-card" id="strategy-focusTarget" data-strategy-id="focusTarget">
+        <div class="strategy-card-inner">
+          <header class="strategy-header">
+            <div>
+              <div class="strategy-title">
+                <span class="strategy-index-pill">8</span>
+                One-play focus target
+              </div>
+              <div class="strategy-tagline">
+                When your brain is noisy, give it one clear job for the next possession.
+              </div>
+            </div>
+          </header>
+
+          <div class="strategy-chip-row">
+            <span class="strategy-chip recommended-chip">Locked in</span>
+            <span class="strategy-chip">Defense</span>
+            <span class="strategy-chip">Discipline</span>
+          </div>
+
+          <p class="strategy-description">
+            After a mistake, narrow your focus on one simple job: keep the ball in front, box out your
+            man, set a strong screen, or run the play with perfect spacing. One clear assignment
+            leaves less room in your head for negativity.
+          </p>
+
+          <div class="questions-grid">
+            <div class="question-block">
+              <div class="question-title">Your go-to targets</div>
+              <label class="question-label">
+                Pick one defensive and one offensive focus target for your next game.
+                <textarea data-storage-key="focusTarget-offDef"
+                          data-question="Pick one defensive and one offensive focus target for your next game."></textarea>
+              </label>
+              <label class="question-label">
+                In your role as a
+                <span class="dynamic-label" data-dynamic="positionLabel"></span>,
+                which focus target will help the team the most?
+                <input type="text"
+                       data-storage-key="focusTarget-role"
+                       data-question="In your position, which focus target will help the team the most?">
+              </label>
+            </div>
+
+            <div class="question-block">
+              <div class="question-title">Use it after mistakes</div>
+              <label class="question-label">
+                After a
+                <span class="dynamic-label" data-dynamic="mistakeLabel"></span>,
+                what will your very next-play focus target be?
+                <textarea data-storage-key="focusTarget-mistake"
+                          data-question="After your chosen mistake, what will your very next-play focus target be?"></textarea>
+              </label>
+              <label class="question-label">
+                Write your "next-play script" in one line:
+                "Next play, my only job is to…"
+                <textarea data-storage-key="focusTarget-script"
+                          data-question="Write your next-play script: Next play, my only job is to…"></textarea>
+              </label>
+            </div>
+          </div>
+
+          <p class="strategy-footer-note">
+            You don't have to fix everything at once — just own the next possession.
+          </p>
+        </div>
+      </article>
+
+      <!-- 9. After-game review -->
+      <article class="strategy-card" id="strategy-review" data-strategy-id="review">
+        <div class="strategy-card-inner">
+          <header class="strategy-header">
+            <div>
+              <div class="strategy-title">
+                <span class="strategy-index-pill">9</span>
+                Post-game review, not replay
+              </div>
+              <div class="strategy-tagline">
+                After the game, study it like film instead of beating yourself up.
+              </div>
+            </div>
+          </header>
+
+          <div class="strategy-chip-row">
+            <span class="strategy-chip recommended-chip">Reflection</span>
+            <span class="strategy-chip">Improvement</span>
+            <span class="strategy-chip">Calm debrief</span>
+          </div>
+
+          <p class="strategy-description">
+            Instead of reliving your worst play over and over, ask better questions:
+            "What did I do well? What can I clean up? What can I practice?" This turns bad games
+            into blueprints for growth instead of reasons to fear the next one.
+          </p>
+
+          <div class="questions-grid">
+            <div class="question-block">
+              <div class="question-title">Your 3 review questions</div>
+              <label class="question-label">
+                Write 3 questions you'll ask yourself after every game
+                (example: "Did I sprint back?").
+                <textarea data-storage-key="review-questions"
+                          data-question="Write 3 questions you'll ask yourself after every game."></textarea>
+              </label>
+              <label class="question-label">
+                How soon after games will you do this review (on bus, that night, next morning)?
+                <input type="text"
+                       data-storage-key="review-timing"
+                       data-question="How soon after games will you do this review?">
+              </label>
+            </div>
+
+            <div class="question-block">
+              <div class="question-title">Plan a fix</div>
+              <label class="question-label">
+                Name one drill you can use in practice to reduce
+                <span class="dynamic-label" data-dynamic="mistakeLabel"></span>s
+                in your role as a
+                <span class="dynamic-label" data-dynamic="positionLabel"></span>.
+                <textarea data-storage-key="review-drill"
+                          data-question="Name one drill you can use in practice to reduce your chosen mistake in your role."></textarea>
+              </label>
+              <label class="question-label">
+                What's one thing you'll look for on film to prove you're improving?
+                <textarea data-storage-key="review-proof"
+                          data-question="What's one thing you'll look for on film to prove you're improving?"></textarea>
+              </label>
+            </div>
+          </div>
+
+          <p class="strategy-footer-note">
+            Your worst game can still be a great practice plan.
+          </p>
+        </div>
+      </article>
+    </section>
+  </div>
+
+  <button type="button" class="back-to-top" id="backToTopBtn">
+    <span>↑</span>
+    <span>Top</span>
+  </button>
+
+  <script>
+    (function () {
+      "use strict";
+
+      document.addEventListener("DOMContentLoaded", function () {
+        var positionSelect = document.getElementById("positionSelect");
+        var mistakeSelect = document.getElementById("mistakeSelect");
+        var randomComboBtn = document.getElementById("randomComboBtn");
+        var downloadPlanBtn = document.getElementById("downloadPlanBtn");
+        var backToTopBtn = document.getElementById("backToTopBtn");
+
+        var summaryLine = document.getElementById("summaryLine");
+        var summaryPosition = document.getElementById("summaryPosition");
+        var summaryMistake = document.getElementById("summaryMistake");
+        var summaryBullets = document.getElementById("summaryBullets");
+
+        var strategyCards = Array.prototype.slice.call(
+          document.querySelectorAll(".strategy-card")
+        );
+        var navButtons = Array.prototype.slice.call(
+          document.querySelectorAll(".strategy-nav-item")
+        );
+
+        var dynamicPositionLabels = document.querySelectorAll(
+          '[data-dynamic="positionLabel"]'
+        );
+        var dynamicMistakeLabels = document.querySelectorAll(
+          '[data-dynamic="mistakeLabel"]'
+        );
+
+        var STORAGE_PREFIX = "basketballMentalPlan-";
+        var canUseStorage = true;
+
+        try {
+          var testKey = STORAGE_PREFIX + "test";
+          window.localStorage.setItem(testKey, "1");
+          window.localStorage.removeItem(testKey);
+        } catch (e) {
+          canUseStorage = false;
+          console.warn("localStorage unavailable, answers will not persist.", e);
+        }
+
+        var POSITIONS = {
+          guard: {
+            label: "Guard / Point guard",
+            short: "Handles the ball, runs the offense, sets the tempo."
+          },
+          wing: {
+            label: "Wing / 2–3",
+            short: "Spaces the floor, attacks closeouts, defends perimeter."
+          },
+          big: {
+            label: "Big / 4–5",
+            short: "Screens, rebounds, protects the paint, finishes inside."
+          },
+          allrounder: {
+            label: "All‑rounder / Positionless",
+            short: "Does a bit of everything on both ends."
+          }
+        };
+
+        var MISTAKES = {
+          missedShot: {
+            label: "Missed shot / layup",
+            short: "Easy to lose confidence or get scared to shoot."
+          },
+          turnover: {
+            label: "Turnover / bad pass",
+            short: "Can make you hesitant with the ball or afraid to attack."
+          },
+          foulTrouble: {
+            label: "Foul trouble",
+            short: "Frustrating and can make you passive on defense."
+          },
+          defense: {
+            label: "Blown coverage / scored on",
+            short: "Can make you feel exposed or targeted on defense."
+          },
+          energy: {
+            label: "Low energy / bad body language",
+            short: "Drags down your own game and your team's vibe."
+          },
+          rebound: {
+            label: "Missed box out / rebound",
+            short: "Gives up extra possessions and easy points."
+          },
+          freeThrow: {
+            label: "Missed free throw",
+            short: "Feels like 'free points' left on the board in big moments."
+          }
+        };
+
+        var RECOMMENDED_STRATS_BY_MISTAKE = {
+          missedShot: ["resetRoutine", "nextPlay", "missRule", "bodyLanguage", "focusTarget"],
+          turnover: ["resetRoutine", "nextPlay", "controllables", "focusTarget"],
+          foulTrouble: ["resetRoutine", "controllables", "bodyLanguage", "review"],
+          defense: ["resetRoutine", "controllables", "focusTarget", "review"],
+          energy: ["controllables", "teamConnect", "bodyLanguage"],
+          rebound: ["controllables", "focusTarget", "review"],
+          freeThrow: ["resetRoutine", "nextPlay", "missRule", "focusTarget"]
+        };
+
+        function getStrategyTitleById(id) {
+          var card = document.querySelector(
+            '.strategy-card[data-strategy-id="' + id + '"]'
+          );
+          if (!card) return id;
+          var heading = card.querySelector(".strategy-title");
+          if (!heading) return id;
+          return heading.textContent.replace(/^\s*\d+\s*/, "").trim();
+        }
+
+        function getSelectedPositionKey() {
+          return positionSelect.value || "guard";
+        }
+
+        function getSelectedMistakeKey() {
+          return mistakeSelect.value || "missedShot";
+        }
+
+        function updateDynamicLabels() {
+          var posKey = getSelectedPositionKey();
+          var mistakeKey = getSelectedMistakeKey();
+
+          var posLabel =
+            (POSITIONS[posKey] && POSITIONS[posKey].label) ||
+            POSITIONS.guard.label;
+          var mistakeLabel =
+            (MISTAKES[mistakeKey] && MISTAKES[mistakeKey].label) ||
+            MISTAKES.missedShot.label;
+
+          dynamicPositionLabels.forEach(function (el) {
+            el.textContent = posLabel;
+          });
+          dynamicMistakeLabels.forEach(function (el) {
+            el.textContent = mistakeLabel.toLowerCase();
+          });
+        }
+
+        function updateSummary() {
+          var posKey = getSelectedPositionKey();
+          var mistakeKey = getSelectedMistakeKey();
+          var posObj = POSITIONS[posKey] || POSITIONS.guard;
+          var mistakeObj = MISTAKES[mistakeKey] || MISTAKES.missedShot;
+
+          summaryPosition.textContent = posObj.label;
+          summaryMistake.textContent = mistakeObj.label;
+
+          summaryLine.textContent =
+            "You're preparing as a " +
+            posObj.label +
+            " dealing with " +
+            mistakeObj.label.toLowerCase() +
+            ". Today's goal: stay positive, respond fast, and win the next play.";
+
+          while (summaryBullets.firstChild) {
+            summaryBullets.removeChild(summaryBullets.firstChild);
+          }
+
+          var recIds = RECOMMENDED_STRATS_BY_MISTAKE[mistakeKey] || [];
+          if (recIds.length === 0) {
+            var li = document.createElement("li");
+            li.textContent =
+              "Use any strategy below to build your personal reset routine.";
+            summaryBullets.appendChild(li);
+            return;
+          }
+
+          recIds.forEach(function (id) {
+            var li = document.createElement("li");
+            li.textContent = "Lean on: " + getStrategyTitleById(id);
+            summaryBullets.appendChild(li);
+          });
+
+          var extra = document.createElement("li");
+          extra.textContent =
+            "Answer the questions in at least 2 cards to build a simple game‑day mental plan.";
+          summaryBullets.appendChild(extra);
+        }
+
+        function updateRecommendedHighlight() {
+          var mistakeKey = getSelectedMistakeKey();
+          var recIds = RECOMMENDED_STRATS_BY_MISTAKE[mistakeKey] || [];
+
+          strategyCards.forEach(function (card) {
+            var id = card.getAttribute("data-strategy-id");
+            if (recIds.indexOf(id) !== -1) {
+              card.classList.add("recommended");
+            } else {
+              card.classList.remove("recommended");
+            }
+          });
+
+          navButtons.forEach(function (btn) {
+            var id = btn.getAttribute("data-strategy-id");
+            if (recIds.indexOf(id) !== -1) {
+              btn.classList.add("recommended");
+            } else {
+              btn.classList.remove("recommended");
+            }
+          });
+        }
+
+        function handleSelectionChange() {
+          updateDynamicLabels();
+          updateSummary();
+          updateRecommendedHighlight();
+        }
+
+        function randomizeCombo() {
+          var posOptions = ["guard", "wing", "big", "allrounder"];
+          var mistakeOptions = [
+            "missedShot",
+            "turnover",
+            "foulTrouble",
+            "defense",
+            "energy",
+            "rebound",
+            "freeThrow"
+          ];
+          var pos =
+            posOptions[Math.floor(Math.random() * posOptions.length)];
+          var mistake =
+            mistakeOptions[Math.floor(Math.random() * mistakeOptions.length)];
+
+          positionSelect.value = pos;
+          mistakeSelect.value = mistake;
+          handleSelectionChange();
+        }
+
+        function scrollToCard(cardId) {
+          var el = document.getElementById(cardId);
+          if (!el) return;
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        function setActiveNavForCardId(cardId) {
+          navButtons.forEach(function (btn) {
+            var target = btn.getAttribute("data-target");
+            if (target === cardId) {
+              btn.classList.add("active");
+            } else {
+              btn.classList.remove("active");
+            }
+          });
+        }
+
+        function attachNavHandlers() {
+          navButtons.forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              var targetId = btn.getAttribute("data-target");
+              scrollToCard(targetId);
+              setActiveNavForCardId(targetId);
+              btn.blur();
+            });
+          });
+
+          if ("IntersectionObserver" in window) {
+            var observer = new IntersectionObserver(
+              function (entries) {
+                entries.forEach(function (entry) {
+                  if (entry.isIntersecting) {
+                    setActiveNavForCardId(entry.target.id);
+                  }
+                });
+              },
+              {
+                threshold: 0.4
+              }
+            );
+            strategyCards.forEach(function (card) {
+              observer.observe(card);
+            });
+          }
+        }
+
+        function loadStoredAnswers() {
+          if (!canUseStorage) return;
+          var fields = document.querySelectorAll("[data-storage-key]");
+          fields.forEach(function (field) {
+            var key =
+              STORAGE_PREFIX + (field.getAttribute("data-storage-key") || "");
+            if (!key) return;
+            var stored = window.localStorage.getItem(key);
+            if (stored !== null) {
+              field.value = stored;
+            }
+          });
+        }
+
+        function attachStorageListeners() {
+          if (!canUseStorage) return;
+          var fields = document.querySelectorAll("[data-storage-key]");
+          fields.forEach(function (field) {
+            field.addEventListener("input", function () {
+              var key =
+                STORAGE_PREFIX +
+                (field.getAttribute("data-storage-key") || "");
+              try {
+                window.localStorage.setItem(key, field.value);
+              } catch (e) {
+                console.warn("Could not save answer to localStorage.", e);
+              }
+            });
+          });
+        }
+
+        function downloadPlan() {
+          var posKey = getSelectedPositionKey();
+          var mistakeKey = getSelectedMistakeKey();
+          var posObj = POSITIONS[posKey] || POSITIONS.guard;
+          var mistakeObj = MISTAKES[mistakeKey] || MISTAKES.missedShot;
+
+          var fields = document.querySelectorAll("[data-storage-key]");
+          var lines = [];
+
+          lines.push("Basketball Mental Game Plan");
+          lines.push("============================");
+          lines.push("");
+          lines.push("Position: " + posObj.label);
+          lines.push("Main mistake focus: " + mistakeObj.label);
+          lines.push("");
+
+          fields.forEach(function (field) {
+            var question =
+              field.getAttribute("data-question") ||
+              "Question for " + (field.getAttribute("data-storage-key") || "");
+            var answer = (field.value || "").trim();
+
+            lines.push("Q: " + question);
+            lines.push("A: " + (answer || "(not answered yet)"));
+            lines.push("");
+          });
+
+          var text = lines.join("\n");
+          var blob = new Blob([text], { type: "text/plain" });
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement("a");
+          a.href = url;
+          a.download = "mental-game-plan.txt";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }
+
+        function attachBackToTop() {
+          backToTopBtn.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          });
+          window.addEventListener("scroll", function () {
+            if (window.scrollY > 320) {
+              backToTopBtn.classList.add("visible");
+            } else {
+              backToTopBtn.classList.remove("visible");
+            }
+          });
+        }
+
+        positionSelect.addEventListener("change", handleSelectionChange);
+        mistakeSelect.addEventListener("change", handleSelectionChange);
+        randomComboBtn.addEventListener("click", randomizeCombo);
+        downloadPlanBtn.addEventListener("click", downloadPlan);
+
+        attachNavHandlers();
+        attachBackToTop();
+        loadStoredAnswers();
+        attachStorageListeners();
+
+        handleSelectionChange();
+      });
+    })();
+  </script>
+</body>
+</html>
