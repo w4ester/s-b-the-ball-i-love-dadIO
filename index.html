@@ -25,6 +25,54 @@
       --radius-sm: 8px;
       --transition-fast: 0.18s ease-out;
       --transition-med: 0.25s ease-out;
+
+      /* Position theme colors - default */
+      --theme-primary: #6366f1;
+      --theme-primary-soft: rgba(99, 102, 241, 0.15);
+      --theme-primary-muted: #a5b4fc;
+      --theme-gradient-start: #6366f1;
+      --theme-gradient-end: #3b82f6;
+      --theme-glow: rgba(99, 102, 241, 0.4);
+    }
+
+    /* Guard theme - Blue (court vision, orchestration) */
+    [data-theme="guard"] {
+      --theme-primary: #3b82f6;
+      --theme-primary-soft: rgba(59, 130, 246, 0.15);
+      --theme-primary-muted: #93c5fd;
+      --theme-gradient-start: #3b82f6;
+      --theme-gradient-end: #1d4ed8;
+      --theme-glow: rgba(59, 130, 246, 0.4);
+    }
+
+    /* Wing theme - Emerald (versatility, balance) */
+    [data-theme="wing"] {
+      --theme-primary: #10b981;
+      --theme-primary-soft: rgba(16, 185, 129, 0.15);
+      --theme-primary-muted: #6ee7b7;
+      --theme-gradient-start: #10b981;
+      --theme-gradient-end: #059669;
+      --theme-glow: rgba(16, 185, 129, 0.4);
+    }
+
+    /* Big theme - Amber (power, presence) */
+    [data-theme="big"] {
+      --theme-primary: #f59e0b;
+      --theme-primary-soft: rgba(245, 158, 11, 0.15);
+      --theme-primary-muted: #fcd34d;
+      --theme-gradient-start: #f59e0b;
+      --theme-gradient-end: #d97706;
+      --theme-glow: rgba(245, 158, 11, 0.4);
+    }
+
+    /* All-rounder theme - Purple (flexibility, adaptability) */
+    [data-theme="allrounder"] {
+      --theme-primary: #8b5cf6;
+      --theme-primary-soft: rgba(139, 92, 246, 0.15);
+      --theme-primary-muted: #c4b5fd;
+      --theme-gradient-start: #8b5cf6;
+      --theme-gradient-end: #7c3aed;
+      --theme-glow: rgba(139, 92, 246, 0.4);
     }
 
     * {
@@ -253,10 +301,10 @@
     }
 
     .button-primary {
-      border-color: var(--accent);
-      background: linear-gradient(to right, var(--accent), #3b82f6);
+      border-color: var(--theme-primary);
+      background: linear-gradient(to right, var(--theme-gradient-start), var(--theme-gradient-end));
       color: #f9fafb;
-      box-shadow: 0 14px 30px rgba(37, 99, 235, 0.45);
+      box-shadow: 0 14px 30px var(--theme-glow);
     }
 
     .button:hover {
@@ -266,8 +314,8 @@
     }
 
     .button-primary:hover {
-      background: linear-gradient(to right, var(--accent-strong), #2563eb);
-      box-shadow: 0 18px 40px rgba(37, 99, 235, 0.6);
+      background: linear-gradient(to right, var(--theme-gradient-end), var(--theme-gradient-start));
+      box-shadow: 0 18px 40px var(--theme-glow);
     }
 
     .button:active {
@@ -366,7 +414,93 @@
       width: 7px;
       height: 2px;
       border-radius: 999px;
-      background: #60a5fa;
+      background: var(--theme-primary-muted);
+    }
+
+    /* Mental tip card */
+    .mental-tip-card {
+      margin-top: 0.8rem;
+      padding: 0.7rem 0.9rem;
+      border-radius: var(--radius-md);
+      background: var(--theme-primary-soft);
+      border: 1px solid var(--theme-primary);
+      border-left: 3px solid var(--theme-primary);
+      transition: background-color var(--transition-med), border-color var(--transition-med);
+    }
+
+    .mental-tip-header {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .mental-tip-icon {
+      font-size: 1rem;
+    }
+
+    .mental-tip-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--theme-primary-muted);
+      font-weight: 600;
+    }
+
+    .mental-tip-text {
+      font-size: 0.88rem;
+      color: #f1f5f9;
+      line-height: 1.5;
+    }
+
+    .mental-tip-source {
+      margin-top: 0.4rem;
+      font-size: 0.7rem;
+      color: #94a3b8;
+      font-style: italic;
+    }
+
+    /* Research citation badge */
+    .research-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.12rem 0.45rem;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.4);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #4ade80;
+    }
+
+    .research-badge::before {
+      content: "✓";
+      font-size: 0.6rem;
+    }
+
+    /* Position indicator */
+    .position-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background: var(--theme-primary-soft);
+      border: 1px solid var(--theme-primary);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--theme-primary-muted);
+      transition: all var(--transition-med);
+    }
+
+    .position-indicator-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--theme-primary);
+      box-shadow: 0 0 0 3px var(--theme-primary-soft);
     }
 
     /* Strategy nav */
@@ -675,16 +809,87 @@
       }
     }
 
+    /* Enhanced focus styles for accessibility */
+    .button:focus-visible,
+    select:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    .strategy-nav-item:focus-visible {
+      outline: 2px solid var(--theme-primary);
+      outline-offset: 2px;
+    }
+
+    /* Skip link for keyboard navigation */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 0;
+      padding: 0.5rem 1rem;
+      background: var(--theme-primary);
+      color: #fff;
+      z-index: 100;
+      border-radius: var(--radius-sm);
+    }
+
+    .skip-link:focus {
+      top: 0.5rem;
+      left: 0.5rem;
+    }
+
+    /* Theme transition for smooth color changes */
+    .summary-card,
+    .mental-tip-card,
+    .position-indicator,
+    .button-primary,
+    .summary-bullets li::before {
+      transition: all var(--transition-med);
+    }
+
+    /* Interactive card hover effect */
+    .strategy-card {
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .strategy-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(148, 163, 184, 0.3);
+    }
+
+    /* Progress indicator for answered questions */
+    textarea:not(:placeholder-shown),
+    input[type="text"]:not(:placeholder-shown),
+    input[type="number"]:valid:not(:placeholder-shown) {
+      border-color: var(--theme-primary);
+      background: linear-gradient(to right, var(--theme-primary-soft), transparent) padding-box,
+                  #ffffff;
+    }
+
+    /* Subtle animation for mental tip card */
+    @keyframes tipPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.85; }
+    }
+
+    .mental-tip-card {
+      animation: tipPulse 4s ease-in-out infinite;
+    }
+
+    .mental-tip-card:hover {
+      animation: none;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         scroll-behavior: auto !important;
         transition: none !important;
+        animation: none !important;
       }
     }
   </style>
 </head>
 
 <body>
+  <a href="#strategies" class="skip-link">Skip to strategies</a>
   <div class="page-shell" id="top">
     <header class="page-header">
       <div class="page-eyebrow">
@@ -771,15 +976,33 @@
           Game mindset snapshot
           <span class="summary-title-pill">Live</span>
         </div>
+        <span class="research-badge">Research-backed</span>
       </div>
       <p class="summary-line" id="summaryLine">
         <!-- Filled by JS -->
       </p>
       <div class="summary-meta">
-        <span><span class="bullet"></span> Position: <span id="summaryPosition"></span></span>
-        <span><span class="bullet"></span> Main challenge: <span id="summaryMistake"></span></span>
+        <span class="position-indicator" id="positionIndicator">
+          <span class="position-indicator-dot"></span>
+          <span id="summaryPosition"></span>
+        </span>
+        <span><span class="bullet"></span> Challenge focus: <span id="summaryMistake"></span></span>
       </div>
       <ul class="summary-bullets" id="summaryBullets"></ul>
+
+      <!-- Position-specific mental tip -->
+      <div class="mental-tip-card" id="mentalTipCard" role="complementary" aria-label="Position-specific mental tip">
+        <div class="mental-tip-header">
+          <span class="mental-tip-icon" id="mentalTipIcon">🧠</span>
+          <span class="mental-tip-label">Mental tip for your position</span>
+        </div>
+        <p class="mental-tip-text" id="mentalTipText">
+          <!-- Filled by JS -->
+        </p>
+        <p class="mental-tip-source" id="mentalTipSource">
+          <!-- Filled by JS -->
+        </p>
+      </div>
     </section>
 
     <!-- Strategy navigation -->
@@ -848,8 +1071,8 @@
 
           <p class="strategy-description">
             Decide on a quick reset you do after every challenge: a slow exhale, a small physical cue
-            (chest tap, clap, shoe fix), and a short phrase like "Next play." Practice it in scrimmage
-            so your brain links reset moments with calming down instead of panicking.
+            (chest tap, clap, shoe fix), and a short phrase like "Next play." Dr. Jim Loehr's research shows
+            that consistent rituals help athletes trigger their Ideal Performance State (IPS) on demand.
           </p>
 
           <div class="questions-grid">
@@ -918,9 +1141,9 @@
           </div>
 
           <p class="strategy-description">
-            When you face a challenge, your brain wants to yell "I suck" or "Coach is mad." Replace that with
-            short, specific commands like "Sprint back," "Two hands on the ball," or "Feet set, follow
-            through." Your words should coach you on the next action, not punish you for the last one.
+            When you face a challenge, your brain wants to yell "I suck." Replace that with
+            short, specific commands like "Sprint back" or "Feet set, follow through." Dr. Bob Rotella
+            emphasizes present-moment focus — your words should coach you on the next action, not the last one.
           </p>
 
           <div class="questions-grid">
@@ -1056,9 +1279,9 @@
           </div>
 
           <p class="strategy-description">
-            When you hit a reset moment, zoom out like you're watching film: what exactly happened? Were you
-            off‑balance, rushed, at a bad angle, or late on a rotation? One small adjustment turns a
-            tough play into a useful rep.
+            When you hit a reset moment, zoom out like you're watching film: what exactly happened?
+            Dr. Carol Dweck's growth mindset research shows athletes who view challenges as learning data
+            — not failure — perform significantly better over time. One small adjustment turns a tough play into growth.
           </p>
 
           <div class="questions-grid">
@@ -1324,9 +1547,9 @@
           </div>
 
           <p class="strategy-description">
-            After a reset moment, narrow your focus on one simple job: keep the ball in front, box out your
-            man, set a strong screen, or run the play with perfect spacing. One clear assignment
-            leaves less room in your head for negativity.
+            After a reset moment, narrow your focus on one simple job. Research on the "Quiet Eye" technique
+            shows that a longer, steadier gaze improves performance under pressure. One clear visual or
+            physical target leaves less room in your head for negativity.
           </p>
 
           <div class="questions-grid">
@@ -1461,6 +1684,10 @@
         var summaryPosition = document.getElementById("summaryPosition");
         var summaryMistake = document.getElementById("summaryMistake");
         var summaryBullets = document.getElementById("summaryBullets");
+        var mentalTipText = document.getElementById("mentalTipText");
+        var mentalTipIcon = document.getElementById("mentalTipIcon");
+        var mentalTipSource = document.getElementById("mentalTipSource");
+        var pageShell = document.querySelector(".page-shell");
 
         var strategyCards = Array.prototype.slice.call(
           document.querySelectorAll(".strategy-card")
@@ -1491,19 +1718,35 @@
         var POSITIONS = {
           guard: {
             label: "Guard / Point guard",
-            short: "Handles the ball, runs the offense, sets the tempo."
+            short: "Handles the ball, runs the offense, sets the tempo.",
+            icon: "🎯",
+            mentalTip: "Use the 'Quiet Eye' technique before passes and shots — maintain a longer, steadier gaze at your target. Research shows this improves decision-making under pressure.",
+            tipSource: "Dr. Patrick Cohn, Peak Performance Sports",
+            color: "guard"
           },
           wing: {
             label: "Wing / 2–3",
-            short: "Spaces the floor, attacks closeouts, defends perimeter."
+            short: "Spaces the floor, attacks closeouts, defends perimeter.",
+            icon: "⚡",
+            mentalTip: "Embrace Dr. Carol Dweck's growth mindset: every missed shot is data, not failure. Elite wings like Pete Sampras constantly analyzed and improved rather than dwelling on errors.",
+            tipSource: "Dr. Carol Dweck, Stanford University",
+            color: "wing"
           },
           big: {
             label: "Big / 4–5",
-            short: "Screens, rebounds, protects the paint, finishes inside."
+            short: "Screens, rebounds, protects the paint, finishes inside.",
+            icon: "🏔️",
+            mentalTip: "Focus on controllables: effort on every box-out, communication on every switch. Dr. Bob Rotella teaches that process focus beats outcome focus — dominate your role, trust the results.",
+            tipSource: "Dr. Bob Rotella, Sports Psychologist",
+            color: "big"
           },
           allrounder: {
             label: "All‑rounder / Positionless",
-            short: "Does a bit of everything on both ends."
+            short: "Does a bit of everything on both ends.",
+            icon: "🔄",
+            mentalTip: "Train your Ideal Performance State (IPS): Dr. Jim Loehr's research shows elite athletes trigger peak performance on demand through consistent pre-play rituals and breath control.",
+            tipSource: "Dr. Jim Loehr, Human Performance Institute",
+            color: "allrounder"
           }
         };
 
@@ -1564,6 +1807,18 @@
 
         function getSelectedMistakeKey() {
           return mistakeSelect.value || "missedShot";
+        }
+
+        function updateTheme(posKey) {
+          var posObj = POSITIONS[posKey] || POSITIONS.guard;
+          document.documentElement.setAttribute("data-theme", posObj.color || "guard");
+        }
+
+        function updateMentalTip(posKey) {
+          var posObj = POSITIONS[posKey] || POSITIONS.guard;
+          mentalTipText.textContent = posObj.mentalTip || "";
+          mentalTipIcon.textContent = posObj.icon || "🧠";
+          mentalTipSource.textContent = "— " + (posObj.tipSource || "Sports Psychology Research");
         }
 
         function updateDynamicLabels() {
@@ -1650,6 +1905,9 @@
         }
 
         function handleSelectionChange() {
+          var posKey = getSelectedPositionKey();
+          updateTheme(posKey);
+          updateMentalTip(posKey);
           updateDynamicLabels();
           updateSummary();
           updateRecommendedHighlight();
