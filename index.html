@@ -1083,19 +1083,22 @@
                 What's your release move? (FUDGE step 1: clap, exhale, chest tap)
                 <input type="text"
                        data-storage-key="resetRoutine-release"
-                       data-question="What's your release move for frustration?">
+                       data-question="What's your release move for frustration?"
+                       list="suggestions-release" autocomplete="on">
               </label>
               <label class="question-label">
                 What's your mental fix? (Visualize the correct play)
                 <input type="text"
                        data-storage-key="resetRoutine-fix"
-                       data-question="How will you mentally visualize the correct play?">
+                       data-question="How will you mentally visualize the correct play?"
+                       list="suggestions-fix" autocomplete="on">
               </label>
               <label class="question-label">
                 What's your forget cue? (Word, gesture, or breath to let go)
                 <input type="text"
                        data-storage-key="resetRoutine-forget"
-                       data-question="What cue helps you forget and move on?">
+                       data-question="What cue helps you forget and move on?"
+                       list="suggestions-forget" autocomplete="on">
               </label>
             </div>
 
@@ -1117,7 +1120,8 @@
                 <input type="text"
                        data-storage-key="resetRoutine-focus"
                        data-question="What focus phrase will you use for the next play?"
-                       placeholder="e.g., 'Next play' or 'Lock in'">
+                       placeholder="e.g., 'Next play' or 'Lock in'"
+                       list="suggestions-focus" autocomplete="on">
               </label>
             </div>
           </div>
@@ -1162,13 +1166,15 @@
               <label class="question-label">
                 Write 2–3 short, positive "next play" phrases you like (for any challenge).
                 <textarea data-storage-key="nextPlay-phrases"
-                          data-question="Write 2–3 short, positive next-play phrases you like (for any challenge)."></textarea>
+                          data-question="Write 2–3 short, positive next-play phrases you like (for any challenge)."
+                          autocomplete="on"></textarea>
               </label>
               <label class="question-label">
                 Which phrase will you use most often when you're tired or frustrated?
                 <input type="text"
                        data-storage-key="nextPlay-mainPhrase"
-                       data-question="Which phrase will you use most often when you're tired or frustrated?">
+                       data-question="Which phrase will you use most often when you're tired or frustrated?"
+                       list="suggestions-phrase" autocomplete="on">
               </label>
             </div>
 
@@ -1182,7 +1188,8 @@
                 what exact phrase will you say to yourself?
                 <input type="text"
                        data-storage-key="nextPlay-specificPhrase"
-                       data-question="After your chosen challenge in your position, what exact phrase will you say to yourself?">
+                       data-question="After your chosen challenge in your position, what exact phrase will you say to yourself?"
+                       list="suggestions-phrase" autocomplete="on">
               </label>
               <label class="question-label">
                 Finish this sentence: "My self-talk will <strong>always</strong> tell me to…"
@@ -1239,13 +1246,15 @@
               <label class="question-label">
                 List 3–5 controllable things you can always bring, no matter how you're shooting.
                 <textarea data-storage-key="controllables-list"
-                          data-question="List 3–5 controllable things you can always bring, no matter how you're shooting."></textarea>
+                          data-question="List 3–5 controllable things you can always bring, no matter how you're shooting."
+                          autocomplete="on"></textarea>
               </label>
               <label class="question-label">
                 Which of those will be your <strong>non‑negotiable</strong> in every game?
                 <input type="text"
                        data-storage-key="controllables-nonnegotiable"
-                       data-question="Which controllable will be your non-negotiable in every game?">
+                       data-question="Which controllable will be your non-negotiable in every game?"
+                       list="suggestions-controllable" autocomplete="on">
               </label>
             </div>
 
@@ -1263,7 +1272,8 @@
                 How will you remind yourself to lean into effort when your stats aren't good?
                 <input type="text"
                        data-storage-key="controllables-reminder"
-                       data-question="How will you remind yourself to lean into effort when your stats aren't good?">
+                       data-question="How will you remind yourself to lean into effort when your stats aren't good?"
+                       list="suggestions-reminder" autocomplete="on">
               </label>
             </div>
           </div>
@@ -1404,7 +1414,8 @@
                 What will you tell yourself after each miss to remember your rule?
                 <input type="text"
                        data-storage-key="missRule-reminder"
-                       data-question="What will you tell yourself after each miss to remember your rule?">
+                       data-question="What will you tell yourself after each miss to remember your rule?"
+                       list="suggestions-phrase" autocomplete="on">
               </label>
             </div>
           </div>
@@ -1472,13 +1483,15 @@
                 what is one specific communication you'll give on the <strong>next</strong> play?
                 <input type="text"
                        data-storage-key="teamConnect-nextTalk"
-                       data-question="After your chosen challenge, what is one specific communication you'll give on the next play?">
+                       data-question="After your chosen challenge, what is one specific communication you'll give on the next play?"
+                       list="suggestions-team" autocomplete="on">
               </label>
               <label class="question-label">
                 Who on your team needs the most positive energy from you during games?
                 <input type="text"
                        data-storage-key="teamConnect-who"
-                       data-question="Who on your team needs the most positive energy from you during games?">
+                       data-question="Who on your team needs the most positive energy from you during games?"
+                       autocomplete="on">
               </label>
             </div>
           </div>
@@ -1522,13 +1535,15 @@
               <label class="question-label">
                 Describe what "strong body language" looks like for you on the court.
                 <textarea data-storage-key="bodyLanguage-define"
-                          data-question="Describe what strong body language looks like for you on the court."></textarea>
+                          data-question="Describe what strong body language looks like for you on the court."
+                          autocomplete="on"></textarea>
               </label>
               <label class="question-label">
                 What negative habit do you want to remove (slumped shoulders, eye‑rolls, staring at coach, etc.)?
                 <input type="text"
                        data-storage-key="bodyLanguage-remove"
-                       data-question="What negative body language habit do you want to remove?">
+                       data-question="What negative body language habit do you want to remove?"
+                       list="suggestions-body" autocomplete="on">
               </label>
             </div>
 
@@ -1602,7 +1617,8 @@
                 which focus target will help the team the most?
                 <input type="text"
                        data-storage-key="focusTarget-role"
-                       data-question="In your position, which focus target will help the team the most?">
+                       data-question="In your position, which focus target will help the team the most?"
+                       list="suggestions-target" autocomplete="on">
               </label>
             </div>
 
@@ -1670,7 +1686,8 @@
                 How soon after games will you do this review (on bus, that night, next morning)?
                 <input type="text"
                        data-storage-key="review-timing"
-                       data-question="How soon after games will you do this review?">
+                       data-question="How soon after games will you do this review?"
+                       autocomplete="on">
               </label>
             </div>
 
@@ -1704,6 +1721,92 @@
     <span>↑</span>
     <span>Top</span>
   </button>
+
+  <!-- Autocomplete datalists -->
+  <datalist id="suggestions-release">
+    <option value="Chest tap">
+    <option value="Quick clap">
+    <option value="Deep breath">
+    <option value="Shoe fix">
+    <option value="Jersey tug">
+    <option value="Wipe hands on shorts">
+    <option value="Fist clench and release">
+  </datalist>
+  <datalist id="suggestions-fix">
+    <option value="See the swish">
+    <option value="Picture perfect form">
+    <option value="Visualize smooth release">
+    <option value="See the crisp pass">
+    <option value="Imagine the stop">
+  </datalist>
+  <datalist id="suggestions-forget">
+    <option value="Flush it">
+    <option value="Next">
+    <option value="Let it go">
+    <option value="Deep exhale">
+    <option value="Wipe hands, wipe mind">
+    <option value="That's done">
+  </datalist>
+  <datalist id="suggestions-focus">
+    <option value="Next play">
+    <option value="Lock in">
+    <option value="Be here now">
+    <option value="This possession">
+    <option value="Dominate this one">
+    <option value="Right here, right now">
+  </datalist>
+  <datalist id="suggestions-phrase">
+    <option value="Next play">
+    <option value="Be great now">
+    <option value="Sprint back">
+    <option value="Lock in">
+    <option value="I got this">
+    <option value="Stay ready">
+    <option value="Trust the work">
+    <option value="One play at a time">
+  </datalist>
+  <datalist id="suggestions-controllable">
+    <option value="Effort on every play">
+    <option value="Communication">
+    <option value="Defense intensity">
+    <option value="Box out every time">
+    <option value="Positive body language">
+    <option value="Sprint in transition">
+    <option value="Help defense">
+    <option value="Screen hard">
+  </datalist>
+  <datalist id="suggestions-reminder">
+    <option value="Effort is free">
+    <option value="Control what I can">
+    <option value="Energy over outcome">
+    <option value="My hustle never has a bad game">
+    <option value="Stats don't measure heart">
+  </datalist>
+  <datalist id="suggestions-team">
+    <option value="My bad, I got you">
+    <option value="Next one">
+    <option value="We're good">
+    <option value="Let's go">
+    <option value="Good look, keep shooting">
+    <option value="I got your back">
+  </datalist>
+  <datalist id="suggestions-body">
+    <option value="Head up, shoulders back">
+    <option value="Walk tall">
+    <option value="Sprint back on defense">
+    <option value="Clap and reset">
+    <option value="Eye contact with teammates">
+    <option value="Hands ready">
+  </datalist>
+  <datalist id="suggestions-target">
+    <option value="Get a stop">
+    <option value="Box out my man">
+    <option value="Sprint the floor">
+    <option value="Talk on D">
+    <option value="Set a hard screen">
+    <option value="Attack the glass">
+    <option value="Move my feet">
+  </datalist>
 
   <script>
     (function () {
